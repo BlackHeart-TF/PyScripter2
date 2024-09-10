@@ -13,6 +13,7 @@ os.makedirs(MODULES_DIR, exist_ok=True)
 script_imports = (
     "from modules.Key import Key\n"+
     "from modules.Window import Window\n"+
+    "from modules.Image import Image\n"+
     #"from time import delay_ms as delay\n"
     "\n"
     )

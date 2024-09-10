@@ -1,4 +1,4 @@
-import ctypes
+import ctypes,sys
 from ctypes import wintypes
 
 # Define necessary types and functions from user32.dll
@@ -37,3 +37,36 @@ def HwndFromTitle(string):
         return True
     EnumWindows(EnumWindowsProc(NameMatches), 0)
     return selectedHwnd
+
+class RECT(ctypes.Structure):
+    _fields_ = [
+        ("left", ctypes.c_long),
+        ("top", ctypes.c_long),
+        ("right", ctypes.c_long),
+        ("bottom", ctypes.c_long)
+    ]
+
+# Load user32.dll
+user32 = ctypes.windll.user32
+
+def get_geometry(hwnd):
+    """
+    Gets the geometry of the window with the given hwnd.
+
+    Args:
+        hwnd (int): The handle to the window (HWND).
+    
+    Returns:
+        tuple: A tuple containing (x, y, width, height) of the window.
+    """
+    rect = RECT()
+    result = user32.GetWindowRect(hwnd, ctypes.byref(rect))
+    if not result:
+        return None
+
+    x = rect.left
+    y = rect.top
+    width = rect.right - rect.left
+    height = rect.bottom - rect.top
+
+    return x, y, width, height
