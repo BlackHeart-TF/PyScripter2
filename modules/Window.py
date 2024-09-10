@@ -23,7 +23,7 @@ def list_windows():
     EnumWindows(EnumWindowsProc(foreach_window), 0)
 
 
-def HwndContains(string):
+def HwndFromTitle(string):
     selectedHwnd = None
     def NameMatches(hwnd, lParam):
         if IsWindowVisible(hwnd):  # Only consider visible windows
